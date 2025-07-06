@@ -1,18 +1,15 @@
-from pathlib import Path
+from src.io.reader import CsvReader
 from datetime import time, datetime
-from pydantic import BaseModel
 from typing import Type, Callable
-
-from src.io.reader import Reader, CsvReader
 from src.model import HourlySales
-import csv
-
+from pydantic import BaseModel
+from pathlib import Path
 
 class CsvModelParser[K, V: BaseModel]:
     def __init__(self,
                  model: Type[V],
                  key_func: Callable[[dict[str,str]], K],
-                 reader: Reader,
+                 reader: CsvReader[K],
                  delimiter: str = ";") -> None:
 
         self.model = model
@@ -33,7 +30,7 @@ class CsvModelParser[K, V: BaseModel]:
         return result
 
 class HourlySalesCsvParser(CsvModelParser[time, HourlySales]):
-    def __init__(self, reader: Reader, key_name: str) -> None:
+    def __init__(self, reader: CsvReader[time], key_name: str) -> None:
         super().__init__(
             model=HourlySales,
             key_func=lambda row: datetime.strptime(row[key_name], "%H:%M").time(),

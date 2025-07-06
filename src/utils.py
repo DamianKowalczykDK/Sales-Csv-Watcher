@@ -1,9 +1,7 @@
-from typing import MutableMapping
-
 from src.config import DATA_PATTERN, TIME_FORMAT, KEY_NAME
 from datetime import time, date, datetime
-
-from src.model import SalesStore, SalesDay
+from typing import MutableMapping
+from src.model import SalesDay
 
 
 def parse_date_from_filename(filename: str) -> date:

@@ -6,14 +6,18 @@ name = "pypi"
 [packages]
 watchdog = "*"
 pydantic = "*"
+python-dotenv = "*"
 
 [dev-packages]
 mypy = "*"
+pytest = "*"
+pytest-cov = "*"
 
 [requires]
 python_version = "3.13"
 python_full_version = "3.13.2"
 
 [scripts]
-check = "mypy ./src"
+check = "mypy ./src ./tests main.py"
 start = "python main.py"
+test = "pytest --cov=src --cov-report=html"

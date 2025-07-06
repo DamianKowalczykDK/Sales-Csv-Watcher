@@ -1,16 +1,15 @@
-from collections.abc import MutableMapping
-from pathlib import Path
-from typing import Callable
-from pydantic import BaseModel
 from watchdog.events import FileSystemEventHandler, FileSystemEvent
 from src.model import HourlySales, SalesDay, SalesStore
-from src.parser import CsvModelParser
-from src.utils import show_sales_store
+from collections.abc import MutableMapping
 from datetime import datetime, date, time
+from src.utils import show_sales_store
+from src.parser import CsvModelParser
+from pydantic import BaseModel
+from typing import Callable
+from pathlib import Path
 import logging
 
 logger = logging.getLogger(__name__)
-
 
 class CsvHandler[T: BaseModel, K, I, V: BaseModel](FileSystemEventHandler):
     def __init__(self,

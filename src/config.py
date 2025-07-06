@@ -1,13 +1,17 @@
-import argparse
+from dotenv import load_dotenv
 from pathlib import Path
+import argparse
 import logging
+import os
 
-WATCH_DIR = Path("data")
-DEFAULT_LOG_FILE = "sales.log"
-CSV_DELIMITER = ";"
-DATA_PATTERN = "%Y-%M-%D"
-TIME_FORMAT = "%H:%M"
-KEY_NAME = "hour"
+load_dotenv()
+
+WATCH_DIR = Path(os.getenv("WATCH_DIR", "./data"))
+DEFAULT_LOG_FILE = os.getenv("DEFAULT_LOG_FILE", "sales.log")
+CSV_DELIMITER = os.getenv("CSV_DELIMITER", ";")
+DATA_PATTERN = os.getenv("DATA_PATTERN", "%Y-%m-%d")
+TIME_FORMAT = os.getenv("TIME_FORMAT", "%H:%M")
+KEY_NAME = os.getenv("KEY_NAME", "hour")
 
 def parse_arguments() -> argparse.Namespace:
     arg_parser = argparse.ArgumentParser(description="Watch directory for Csv Sales files")
@@ -33,9 +37,12 @@ def parse_arguments() -> argparse.Namespace:
     return arg_parser.parse_args()
 
 def setup_logging(log_file: Path) -> None:
+    for handler in logging.root.handlers[:]:
+        logging.root.removeHandler(handler)
+
     log_file.parent.mkdir(parents=True, exist_ok=True)
     logging.basicConfig(level=logging.INFO, format="[%(asctime)s] %(levelname)s %(message)s",
         handlers=[
             logging.FileHandler(log_file, encoding='utf-8'),
-            logging.StreamHandler()
+            # logging.StreamHandler()
     ])

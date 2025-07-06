@@ -2,7 +2,7 @@ import logging
 import signal
 import threading
 from time import sleep
-
+from datetime import time
 from watchdog.observers import Observer
 
 from src.config import parse_arguments, setup_logging
@@ -10,12 +10,24 @@ from src.file_watcher import HourlySalesCsvHandler
 from src.io.reader import CsvReader
 from src.model import SalesStore
 from src.parser import HourlySalesCsvParser
+from src.service import SalesService
 
 stop_event = threading.Event()
 
 def handle_shutdown_signal(signum: int, frame: object) -> None:
     logging.info("Received shutdown signal")
     stop_event.set()
+
+def run_menu(sales_service: SalesService) -> None:
+    while not stop_event.is_set():
+        sleep(1)
+        try:
+            print('\nPress Enter to generate report | Ctrl + C / CMD to exit')
+            input()
+            sales_service.generate_report()
+        except (KeyboardInterrupt, EOFError):
+            stop_event.set()
+            return
 
 
 def main() -> None:
@@ -36,9 +48,11 @@ def main() -> None:
     logger.info(f"Starting login in {log_file.resolve()}")
 
     store = SalesStore(days = {})
-    reader = CsvReader[str]()
-    parser = HourlySalesCsvParser(reader, key_name=args.key_name)
+    reader = CsvReader[time]()
+    parser = HourlySalesCsvParser(reader=reader, key_name=args.key_name)
     handler = HourlySalesCsvHandler(store=store, parser=parser, watch_path=watch_dir)
+    service = SalesService(handler)
+
 
     observer = Observer()
     observer.schedule(handler, path=str(watch_dir), recursive=False)
@@ -46,14 +60,12 @@ def main() -> None:
     logger.info(f"Watching {watch_dir} for Csv files")
 
     try:
-        while not stop_event.is_set():
-            sleep(1)
+        run_menu(service)
     finally:
         logger.info(f"Stopped observer ...")
         observer.stop()
         observer.join()
         logger.info(f"Shutdown complete")
-
 
 if __name__ == '__main__':
     main()

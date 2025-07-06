@@ -1,12 +1,12 @@
-from enum import StrEnum
-from datetime import date, time
 from pydantic import BaseModel, Field
+from datetime import date, time
+from enum import StrEnum
 
 class RegionDirection(StrEnum):
-    NORTH = 'North'
-    WEST = 'West'
-    EAST = 'East'
-    SOUTH = 'South'
+    NORTH = "North"
+    WEST = "West"
+    EAST = "East"
+    SOUTH = "South"
 
 class HourlySales(BaseModel):
     sales_amount: float = Field(..., gt=0)
