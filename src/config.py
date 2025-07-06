@@ -14,6 +14,11 @@ TIME_FORMAT = os.getenv("TIME_FORMAT", "%H:%M")
 KEY_NAME = os.getenv("KEY_NAME", "hour")
 
 def parse_arguments() -> argparse.Namespace:
+    """Parses command-line arguments for the CSV sales watcher script.
+
+    Returns:
+        argparse.Namespace: Parsed arguments including directory, log file, and key name.
+    """
     arg_parser = argparse.ArgumentParser(description="Watch directory for Csv Sales files")
     arg_parser.add_argument(
         "--dir",
@@ -37,6 +42,14 @@ def parse_arguments() -> argparse.Namespace:
     return arg_parser.parse_args()
 
 def setup_logging(log_file: Path) -> None:
+    """Configures logging to write logs to the specified file.
+
+    Removes any existing logging handlers and sets up logging
+    with INFO level to the specified log file.
+
+    Args:
+        log_file (Path): Path to the log file where logs will be written.
+    """
     for handler in logging.root.handlers[:]:
         logging.root.removeHandler(handler)
 
