@@ -7,6 +7,9 @@ name = "pypi"
 watchdog = "*"
 pydantic = "*"
 python-dotenv = "*"
+pandas = "*"
+pandas-stubs = "*"
+streamlit = "*"
 
 [dev-packages]
 mypy = "*"
@@ -18,6 +21,6 @@ python_version = "3.13"
 python_full_version = "3.13.2"
 
 [scripts]
-check = "mypy ./src ./tests main.py"
+check = "mypy ./src ./tests main.py main_streamlit.py"
 start = "python main.py"
 test = "pytest --cov=src --cov-report=html"

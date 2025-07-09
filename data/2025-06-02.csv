@@ -1,0 +1,6 @@
+hour;sales_amount;product;region
+09:00;150.0;Widget A;North
+
+14:00;200.5;Widget B;West
+10:00;180.0;Widget A;East
+16:00;220.0;Widget C;North

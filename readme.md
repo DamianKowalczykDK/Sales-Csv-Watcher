@@ -1,5 +1,6 @@
 # 📦 Sales CSV Watcher
-A Python-based system to watch a directory for sales CSV files, parse and validate sales data, and generate reports in real time.
+Sales CSV Watcher is a Python-based system that monitors a directory for incoming CSV sales files,
+parses and validates sales data, and generates insightful reports — now with an interactive Streamlit interface.
 
 ---
 📁 Project Structure
@@ -11,7 +12,9 @@ src/
 │   └── reader.py
 ├── model.py
 ├── parser.py
+├── report_service.py
 ├── service.py
+├── ui_service.py
 ├── utils.py
 tests/
 ├── test_config.py
@@ -19,7 +22,9 @@ tests/
 ├── test_model.py
 ├── test_parser.py
 ├── test_reader.py
+├── test_report_service.py
 ├── test_service.py
+├── test_ui_service.py
 ├── test_utils.py
 `````
 Pipfile / Pipfile.lock  # Project dependencies
@@ -61,24 +66,52 @@ CSV delimiter, date and time formats, and logging.
 
 
 ## 🖥️ Running the Project
-Start the watcher and sales service by running:
+Backend + Watcher
+Start the directory watcher and logging backend:
 
 - pipenv run start
+
+Streamlit Interface
+Launch the interactive reporting UI:
+
+- streamlit run main_streamlit.py
+
+The app will be available at:
+
+- http://localhost:8501
 
 The app monitors the configured directory for CSV sales files, updates internal data store, and logs activity.
 
 ## 🧠 Features
-✅ Watches directories for new, modified, or deleted CSV files using watchdog.
+✅ Watches a directory for new or updated CSV sales files
 
-✅ Parses CSV rows into validated Pydantic models.
+✅ Parses rows into validated Pydantic models
 
-✅ Supports configurable CSV delimiters, date/time formats, and key names via .env file.
+✅ Configurable CSV delimiters, date/time formats, and key names
 
-✅ Stores sales data grouped by date and hour in memory.
+✅ In-memory storage of daily and hourly grouped sales
 
-✅ Provides a simple service layer to generate sales reports.
+✅ Generates reports including:
 
-✅ Logs all key events and errors for traceability.
+- 🧾 Daily total sales
+
+- 📊 Average daily sales
+
+- 📈 Sales trends (sorted)
+
+- 🚨 Outlier detection based on standard deviation
+
+✅ Streamlit UI:
+
+- Report selection via sidebar
+
+- Data tables with max value highlighting
+
+- Optional bar or line chart toggles
+
+- Interactive and responsive design
+
+✅ 100% test coverage including UI logic
 
 ## 🧪 Testing
 Run tests and check coverage:
@@ -90,13 +123,16 @@ Run static type checks with mypy:
 - pipenv run check
 
 ## 🛠 Technologies Used
-Python 3.13.2
+
+- Python 3.13.2
 
 - Pipenv
 
+- Streamlit
+
 - watchdog
 
-- pydantic
+- Pydantic
 
 - python-dotenv
 
@@ -106,8 +142,11 @@ Python 3.13.2
 
 - pytest-cov
 
-📬 Author
+- pandas
+
+# 📬 Author
 Educational project — Sales CSV Watcher
 
 Author: Damian Kowalczyk
+
 Year: 2025

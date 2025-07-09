@@ -20,23 +20,7 @@ def handle_shutdown_signal(signum: int, frame: object) -> None:
     logging.info("Received shutdown signal")
     stop_event.set()
 
-# def run_menu(sales_service: SalesService) -> None:
-#     while not stop_event.is_set():
-#         sleep(1)
-#         try:
-#             print('\nPress Enter to generate report | Ctrl + C / CMD to exit')
-#             input()
-#             sales_service.generate_report()
-#         except (KeyboardInterrupt, EOFError):
-#             stop_event.set()
-#             return
-
-
 def main() -> None:
-
-    signal.signal(signal.SIGINT, handle_shutdown_signal)
-    signal.signal(signal.SIGTERM, handle_shutdown_signal)
-
 
     args = parse_arguments()
     watch_dir = args.dir
@@ -64,13 +48,6 @@ def main() -> None:
     logger.info(f"Watching {watch_dir} for Csv files")
 
     try:
-        # print(service.generate_report())
-        # print(report_service.report_total_price_per_day())
-        # print(report_service.report_calculate_avg_sales())
-        # print(report_service.report_sales_trend())
-        # print(report_service.report_detect_outliers())
-        # print(service.sales_trend())
-        # print(service.detect_outliers())
         ui_service.show_ui()
 
     finally:
