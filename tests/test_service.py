@@ -1,11 +1,7 @@
-from itertools import product
-from unittest.mock import MagicMock, patch
-
-from _pytest import mark
-from datetime import date, time, datetime
-from src import service
-from src.model import SalesDay, HourlySales, RegionDirection, SalesStore
+from src.model import SalesDay, HourlySales, RegionDirection
 from src.service import SalesService
+from unittest.mock import MagicMock
+from datetime import date, time
 import pytest
 
 @pytest.fixture

@@ -1,8 +1,0 @@
-hour;sales_amount;product;region
-09:00;100.0;Widget A;North
-10:00;110.0;Widget A;East
-11:00;95.0;Widget B;West
-12:00;105.0;Widget C;South
-13:00;500.0;Widget A;North
-14:00;90.0;Widget B;West
-15:00;85.0;Widget C;East

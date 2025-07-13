@@ -1,16 +1,16 @@
-from src.report_service import ReportService
+from src.ui_data_service import UIDataService
 import streamlit as st
 
 class UiService:
     """UI layer for displaying sales reports using Streamlit."""
 
-    def __init__(self, ui_service: ReportService) -> None:
+    def __init__(self, ui_data_service: UIDataService) -> None:
         """Initializes the UiService with a report service.
 
         Args:
-            ui_service (ReportService): Service providing processed report data.
+            ui_data_service (ReportService): Service providing processed report data.
         """
-        self.ui = ui_service
+        self.ui = ui_data_service
 
     def show_ui(self) -> None:
         """Displays the user interface for selecting and visualizing sales reports.

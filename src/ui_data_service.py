@@ -1,7 +1,7 @@
 from src.service import SalesService
 from pandas import DataFrame
 
-class ReportService:
+class UIDataService:
     """Service responsible for converting raw sales data into structured reports."""
 
     def __init__(self, service: SalesService):

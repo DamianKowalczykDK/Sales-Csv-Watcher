@@ -12,8 +12,8 @@ src/
 │   └── reader.py
 ├── model.py
 ├── parser.py
-├── report_service.py
 ├── service.py
+├── ui_data_service.py
 ├── ui_service.py
 ├── utils.py
 tests/
@@ -22,9 +22,9 @@ tests/
 ├── test_model.py
 ├── test_parser.py
 ├── test_reader.py
-├── test_report_service.py
 ├── test_service.py
 ├── test_ui_service.py
+├── test_ui_data_service.py
 ├── test_utils.py
 `````
 Pipfile / Pipfile.lock  # Project dependencies

@@ -1,18 +1,15 @@
-import logging
-import signal
-import threading
-from time import sleep
-from datetime import time
-from watchdog.observers import Observer
-
 from src.config import parse_arguments, setup_logging
 from src.file_watcher import HourlySalesCsvHandler
+from src.ui_data_service import UIDataService
+from src.parser import HourlySalesCsvParser
+from watchdog.observers import Observer
+from src.ui_service import UiService
+from src.service import SalesService
 from src.io.reader import CsvReader
 from src.model import SalesStore
-from src.parser import HourlySalesCsvParser
-from src.report_service import ReportService
-from src.service import SalesService
-from src.ui_service import UiService
+from datetime import time
+import logging
+import threading
 
 stop_event = threading.Event()
 
@@ -38,9 +35,8 @@ def main() -> None:
     parser = HourlySalesCsvParser(reader=reader, key_name=args.key_name)
     handler = HourlySalesCsvHandler(store=store, parser=parser, watch_path=watch_dir)
     service = SalesService(handler)
-    report_service = ReportService(service)
-    ui_service = UiService(report_service)
-
+    ui_data_service = UIDataService(service)
+    ui_service = UiService(ui_data_service)
 
     observer = Observer()
     observer.schedule(handler, path=str(watch_dir), recursive=False)
